@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import { luuLocal } from "../../utils/localStorage";
 import { removeVietnameseTones } from "../../utils/removeVietnamese";
 
@@ -43,7 +43,7 @@ const formSlice = createSlice({
     },
     searchSinhVien: (state, action) => {
       // console.log(current(state));
-      // console.log(action);
+      console.log(action.payload);
       const keyword = removeVietnameseTones(
         action.payload.toLowerCase().trim()
       );
@@ -53,9 +53,12 @@ const formSlice = createSlice({
         // console.log(newName);
         return newName.includes(keyword);
       });
-      keyword
-        ? (state.arrSinhVien = arrFilter)
-        : (state.arrSinhVien = JSON.parse(localStorage.getItem("arrSinhVien")));
+      state.arrSinhVien = keyword
+        ? arrFilter
+        : JSON.parse(localStorage.getItem("arrSinhVien"));
+      if (!keyword) {
+        state.arrSinhVien = JSON.parse(localStorage.getItem("arrSinhVien"));
+      }
     },
   },
 });

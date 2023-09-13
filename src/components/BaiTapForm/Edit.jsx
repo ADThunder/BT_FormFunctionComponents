@@ -14,11 +14,18 @@ const Edit = () => {
   useEffect(() => {
     dispatch(getCurrentSinhVien(params));
   }, []);
+
   const { currentSinhVien } = useSelector((state) => state.formSlice);
   const [hoTen, setHoTen] = useState(currentSinhVien.hoTen);
   const [soDT, setSoDT] = useState(currentSinhVien.soDT);
   const [email, setEmail] = useState(currentSinhVien.email);
-
+  useEffect(() => {
+    if (currentSinhVien) {
+      setHoTen(currentSinhVien.hoTen);
+      setEmail(currentSinhVien.email);
+      setSoDT(currentSinhVien.soDT);
+    }
+  }, [currentSinhVien]);
   const handleHoTenChange = (event) => {
     setHoTen(event.target.value);
   };
@@ -36,9 +43,9 @@ const Edit = () => {
   };
   const newSinhVien = {
     ...currentSinhVien,
-    hoTen: hoTen,
-    soDT: soDT,
-    email: email,
+    hoTen,
+    soDT,
+    email,
   };
   const resetForm = () => {
     setHoTen("");

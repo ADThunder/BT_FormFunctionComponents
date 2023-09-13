@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -52,6 +52,11 @@ const Form = () => {
         ),
     }),
   });
+  useEffect(() => {
+    if (!formik.values.search) {
+      dispatch(searchSinhVien(""));
+    }
+  }, [formik.values.search, dispatch]);
 
   return (
     <div>
